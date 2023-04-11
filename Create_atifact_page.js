@@ -15,11 +15,11 @@ class CreateArtifactPage
 
     }
 
-    clickCreateArtifatButton() {
+    clickCreateArtifatButton () {
       cy.get(this.createArtifatButton).click();
     }
 
-    clickPortalIcon() {
+    clickPortalIcon () {
       cy.get(this.portalIcon).click();
     }
 
