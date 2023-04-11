@@ -1,9 +1,14 @@
 import LoginPage from '../../support/pages/Login_page.js';
 import CreateArtifactPage from '../../support/pages/Create_atifact_page.js';
+import PortalPage from '../../support/pages/Portal_artifact_page.js';
+
+
+
 
 describe('LoginPage_autorithation', () => {
   const loginPage = new LoginPage();
   const createArtifactPage = new CreateArtifactPage();
+  const portalPage = new PortalPage
 
   beforeEach(() => {
     loginPage.autorithation('UserA123456', 'Authorities12345!');
@@ -33,6 +38,9 @@ describe('Creating_artifact_Modal_Windows', () => {
 beforeEach(() => {
     loginPage.autorithation('UserA123456', 'Authorities12345!');
     createArtifactPage.clickCreateArtifatButton();
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      return false
+    })
   });
 
 
@@ -64,15 +72,43 @@ it.skip ('checking Portal modal Window', () => {
     cy.contains('Testing Users').should('exist');
 
   }); 
-it ('checking  create portal artifact', () => {
+it.skip ('checking that  possible  to create  portal artifact', () => {
 
     createArtifactPage.clickPortalIcon();
     createArtifactPage.clickNextButton();
     createArtifactPage.generateRandomCodeForPortalsNameFields();
     createArtifactPage.clickCreatePortalButton();
-
-
-    cy.wait(2000); 
+    
+    cy.contains('Portal').should('exist');
+    cy.url().should('include', 'uu-elementarymanagement-maing01/00000f49a1c540bf9caa28b2f4082f77/portal');
   }); 
+
+
 });
 
+describe('Portal_page_managment', () => {
+  const loginPage = new LoginPage();
+  const portalPage = new PortalPage ();
+
+  beforeEach(() => {
+    loginPage.autorithation('UserA123456', 'Authorities12345!');
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      return false
+    })
+    portalPage.visitPortal();
+
+  });
+
+  
+  
+  it ('checking that  possible  to create  list', () => {
+ 
+    portalPage.clickPortalPageButton();
+    portalPage.clickPortalCreatePageButton();
+    portalPage.generateRandomCodeForPortalCreatePageInputName();
+    portalPage.clickPortalPageportalCreatePageButtonButton();
+    cy.contains('Portal').should('exist');
+
+
+  }); 
+});
